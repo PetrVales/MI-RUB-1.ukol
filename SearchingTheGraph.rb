@@ -60,9 +60,7 @@ class Graph
 
 		protected 
 		def hasNext?; raise MESS; end
-		protected 
 		def getNext; raise MESS; end
-		protected 
 		def addFollowing(node); raise MESS; end
 	end
 
