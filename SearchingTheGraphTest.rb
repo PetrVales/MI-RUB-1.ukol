@@ -177,11 +177,11 @@ describe Graph do
     graph.connectVerticesWithEdge("9", "4")
     graph.connectVerticesWithEdge("10", "4")
     graph.connectVerticesWithEdge("10", "8")
-	graph.bfsFrom("7").should eq("7 1 4 5 6 8 3 9 10 2")
-	graph.dfsFrom("1").should eq("1 3 5 7 4 6 8 10 9 2")
-	graph.bfsFrom("2").should eq("2 9 1 4 3 5 6 7 8 10")
-	graph.bfsFrom("4").should eq("4 6 7 8 9 10 1 5 2 3")
-	graph.bfsFrom("7").should eq("7 1 4 5 6 8 3 9 10 2")
+  	graph.bfsFrom("7").should eq("7 1 4 5 6 8 3 9 10 2")
+  	graph.dfsFrom("1").should eq("1 3 5 7 4 6 8 10 9 2")
+  	graph.bfsFrom("2").should eq("2 9 1 4 3 5 6 7 8 10")
+  	graph.bfsFrom("4").should eq("4 6 7 8 9 10 1 5 2 3")
+  	graph.bfsFrom("7").should eq("7 1 4 5 6 8 3 9 10 2")
   end
 
 end
