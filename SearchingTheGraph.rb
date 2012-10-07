@@ -24,19 +24,20 @@ class Graph
 	end
 
 	def dfsFrom(vertex) 
-		dfs = DepthFirstSearcher.new(vertex(vertex))
-		dfs.search
+		searchGraph(DepthFirstSearcher.new(vertex(vertex)))
 	end
 
 	def bfsFrom(vertex) 
-		bfs = BepthFirstSearcher.new(vertex(vertex))
-		bfs.search
+		searchGraph(BepthFirstSearcher.new(vertex(vertex)))
 	end
 
-	class BepthFirstSearcher
+	def searchGraph(graphSearcher)
+		graphSearcher.search
+	end
+
+	class GraphSearcher
 		def initialize(beginNode)
-			@stack = []
-			@stack.push(beginNode)
+			@stack = [].push(beginNode)
 			@result = ""
 			@visited = []
 		end
@@ -48,12 +49,26 @@ class Graph
 			@result.strip
 		end
 
+		private 
 		def searchGraph()
 			while (hasNext?)
 				node = getNext
 				@result = @result + " " + node.label.to_s
 				addFollowing(node)
 			end
+		end
+
+		protected 
+		def hasNext?; raise MESS; end
+		protected 
+		def getNext; raise MESS; end
+		protected 
+		def addFollowing(node); raise MESS; end
+	end
+
+	class BepthFirstSearcher < GraphSearcher
+		def initialize(beginNode)
+			super(beginNode)
 		end
 
 		def hasNext?()
@@ -77,27 +92,9 @@ class Graph
 		end
 	end
 
-	class DepthFirstSearcher
+	class DepthFirstSearcher < GraphSearcher
 		def initialize(beginNode)
-			@stack = []
-			@stack.push(beginNode)
-			@result = ""
-			@visited = []
-		end
-
-		def search()
-			if (@result.empty?)
-				searchGraph()
-			end
-			@result.strip
-		end
-
-		def searchGraph()
-			while (hasNext?)
-				node = getNext
-				@result = @result + " " + node.label.to_s
-				addFollowing(node)
-			end
+			super(beginNode)
 		end
 
 		def hasNext?()
