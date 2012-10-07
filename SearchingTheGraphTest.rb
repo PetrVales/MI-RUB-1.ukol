@@ -75,7 +75,7 @@ describe Graph do
 	graph.bfsFrom("1").should eq("1")
   end
 
-  it "\nDepth First Search of  1\n" +
+  it "\nBepth First Search of  1\n" +
       "                       /\\\n" +
       "                      2  5\n" +
       "                     /\\  /\\\n" + 
@@ -98,7 +98,7 @@ describe Graph do
 	graph.bfsFrom("1").should eq("1 2 5 3 4 6 7")
   end
 
-  it "Depth First Search of cycle graph 1 2 3" do 
+  it "Bepth First Search of cycle graph 1 2 3" do 
   	graph = Graph.new
     graph.addVertex("1")
     graph.addVertex("2")

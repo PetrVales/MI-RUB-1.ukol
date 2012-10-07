@@ -24,45 +24,111 @@ class Graph
 	end
 
 	def dfsFrom(vertex) 
-		dfs = ""
-		visited = []
-		stack = []
-		stack.push(vertex(vertex))
-		while (!stack.empty?)
-			v = stack.pop
-			if (visited.index(v) == nil)
-				visited.push(v)
-				dfs = dfs + " " + v.label.to_s
-				conn = v.connections().sort {|x,y| y.label.to_i <=> x.label.to_i }
-				conn.each {|x| 
-					if (visited.index(x) == nil)
-						stack.push(x) 
-					end
-				}
-			end
-		end
-		dfs.strip 
+		dfs = DepthFirstSearcher.new(vertex(vertex))
+		dfs.search
 	end
 
 	def bfsFrom(vertex) 
-		bfs = ""
-		visited = []
-		stack = []
-		stack.push(vertex(vertex))
-		while (!stack.empty?)
-			v = stack.first
-			stack = stack.last(stack.size - 1)
-			visited.push(v)
-			bfs = bfs + " " + v.label.to_s
-			conn = v.connections().sort {|x,y| x.label.to_i <=> y.label.to_i }
-			conn.each {|x| 
-				if ((visited.index(x) == nil) && (stack.index(x) == nil))
-					stack.push(x) 
+		bfs = BepthFirstSearcher.new(vertex(vertex))
+		bfs.search
+	end
+
+	class BepthFirstSearcher
+		def initialize(beginNode)
+			@stack = []
+			@stack.push(beginNode)
+			@result = ""
+			@visited = []
+		end
+
+		def search()
+			if (@result.empty?)
+				searchGraph()
+			end
+			@result.strip
+		end
+
+		def searchGraph()
+			while (hasNext?)
+				node = getNext
+				@result = @result + " " + node.label.to_s
+				addFollowing(node)
+			end
+		end
+
+		def hasNext?()
+			!@stack.empty?
+		end
+
+		def getNext()
+			nextNode = @stack.first
+			@stack = @stack.last(@stack.size - 1)
+			@visited.push(nextNode)
+			nextNode
+		end
+
+		def addFollowing(node)
+			connections = node.connections().sort {|x,y| x.label.to_i <=> y.label.to_i }
+			connections.each {|x| 
+				if ((@visited.index(x) == nil) && (@stack.index(x) == nil))
+					@stack.push(x) 
 				end
 			}
 		end
-		bfs.strip 
 	end
+
+	class DepthFirstSearcher
+		def initialize(beginNode)
+			@stack = []
+			@stack.push(beginNode)
+			@result = ""
+			@visited = []
+		end
+
+		def search()
+			if (@result.empty?)
+				searchGraph()
+			end
+			@result.strip
+		end
+
+		def searchGraph()
+			while (hasNext?)
+				node = getNext
+				@result = @result + " " + node.label.to_s
+				addFollowing(node)
+			end
+		end
+
+		def hasNext?()
+			result = false
+			while (!@stack.empty?)
+				node = @stack.pop
+				if (@visited.index(node) == nil)
+					@stack.push(node)
+					result = true
+					break
+				end
+			end
+			result
+		end
+
+		def getNext()
+			nextNode = @stack.pop
+			@visited.push(nextNode)
+			nextNode
+		end
+
+		def addFollowing(node)
+			connections = node.connections().sort {|x,y| y.label.to_i <=> x.label.to_i }
+			connections.each {|x| 
+				if (@visited.index(x) == nil)
+					@stack.push(x) 
+				end
+			}
+		end
+	end
+
 end
 
 class Vertex 
