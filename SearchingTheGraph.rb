@@ -38,18 +38,21 @@ class Graph
 	class GraphSearcher
 		def initialize(beginNode)
 			@stack = [].push(beginNode)
-			@result = ""
 			@visited = []
+			searchResult()
 		end
 
 		def search()
-			if (@result.empty?)
-				searchGraph()
-			end
-			@result.strip
+			@result
 		end
 
 		private 
+		def searchResult()
+			@result = ""
+			searchGraph()
+			@result = @result.strip
+		end
+
 		def searchGraph()
 			while (hasNext?)
 				node = getNext
